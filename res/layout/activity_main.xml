@@ -1,0 +1,104 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:cp="http://schemas.android.com/apk/res/mobi.espier.utils.colorpicker"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingLeft="10sp"
+    android:paddingRight="10sp"
+    tools:context=".MainActivity" >
+    <TextView
+        android:id="@+id/test"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textSize="50dip" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center" >
+        <cn.fmsoft.ioslikeui.widget.SegmentedRadioGroup
+            android:id="@+id/radio_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5sp"
+            android:checkedButton="@+id/button_one"
+            android:orientation="horizontal" >
+            <RadioButton
+                android:id="@+id/palette_button"
+                android:button="@null"
+                android:gravity="center"
+                android:minHeight="33sp"
+                android:minWidth="40sp"
+                android:text="Palette"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/radio_colors" />
+            <RadioButton
+                android:id="@+id/color_picker_button"
+                android:button="@null"
+                android:gravity="center"
+                android:minHeight="33sp"
+                android:minWidth="40sp"
+                android:text="Color Picker"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/radio_colors" />
+        </cn.fmsoft.ioslikeui.widget.SegmentedRadioGroup>
+    </LinearLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+        <LinearLayout
+            android:id="@+id/palette_page"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="10sp" >
+            <mobi.espier.utils.colorpicker.Palette
+                android:id="@+id/palette"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:horizontalSpacing="10sp"
+                android:numColumns="4"
+                android:padding="10sp"
+                android:stretchMode="columnWidth"
+                android:verticalSpacing="10sp" />
+        </LinearLayout>
+        <mobi.espier.utils.colorpicker.ColorPickerPage
+            android:id="@+id/color_picker_page"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="10sp"
+            android:visibility="invisible" >
+            <mobi.espier.utils.colorpicker.ColorPicker
+                android:id="@+id/picker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5sp"
+                cp:color_center_halo_radius="32sp"
+                cp:color_center_radius="30sp"
+                cp:color_wheel_radius="60sp" />
+            <mobi.espier.utils.colorpicker.SVBar
+                android:id="@+id/svbar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                cp:bar_thickness="20sp" />
+            <!--
+        <mobi.espier.utils.colorpicker.OpacityBar
+            android:id="@+id/opacitybar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <mobi.espier.utils.colorpicker.SaturationBar
+            android:id="@+id/saturationbar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <mobi.espier.utils.colorpicker.ValueBar
+            android:id="@+id/valuebar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+            -->
+        </mobi.espier.utils.colorpicker.ColorPickerPage>
+    </FrameLayout>
+</LinearLayout>
