@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    <declare-styleable name="Palette">
+        <attr name="initChecked" format="integer" />
+    </declare-styleable>
+    <declare-styleable name="PaletteItem">
+        <attr name="frameNormalColor" format="color" />
+        <attr name="frameSelectedColor" format="color" />
+        <attr name="frameStroke" format="dimension" />
+    </declare-styleable>
     <declare-styleable name="ColorPicker">
         <attr name="color_wheel_radius" format="dimension" />
         <attr name="color_wheel_thickness" format="dimension" />
         <attr name="color_center_radius" format="dimension" />
-        <attr name="color_center_halo_radius" format="dimension"/>
+        <attr name="color_center_halo_radius" format="dimension" />
         <attr name="color_pointer_radius" format="dimension" />
         <attr name="color_pointer_halo_radius" format="dimension" />
     </declare-styleable>
@@ -15,5 +22,4 @@
         <attr name="bar_pointer_radius" format="dimension" />
         <attr name="bar_pointer_halo_radius" format="dimension" />
     </declare-styleable>
-
 </resources>

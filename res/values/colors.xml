@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Standart dimens for the palette item frame -->
+    <color name="palette_item_frame_normal">#ffffffff</color>
+    <color name="palette_item_frame_selected">#ff000000</color>
+</resources>

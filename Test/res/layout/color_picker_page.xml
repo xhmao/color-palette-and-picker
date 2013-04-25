@@ -1,0 +1,36 @@
+<mobi.espier.utils.colorpicker.ColorPickerPage xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:cp="http://schemas.android.com/apk/res/mobi.espier.utils.colorpicker.test"
+    android:id="@+id/color_picker_page"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="10sp"
+    android:visibility="invisible" >
+    <mobi.espier.utils.colorpicker.ColorPicker
+        android:id="@+id/picker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5sp"
+        cp:color_center_halo_radius="32sp"
+        cp:color_center_radius="30sp"
+        cp:color_wheel_radius="60sp" />
+    <mobi.espier.utils.colorpicker.SVBar
+        android:id="@+id/svbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <!--
+        <mobi.espier.utils.colorpicker.OpacityBar
+            android:id="@+id/opacitybar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <mobi.espier.utils.colorpicker.SaturationBar
+            android:id="@+id/saturationbar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <mobi.espier.utils.colorpicker.ValueBar
+            android:id="@+id/valuebar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    -->
+</mobi.espier.utils.colorpicker.ColorPickerPage>
