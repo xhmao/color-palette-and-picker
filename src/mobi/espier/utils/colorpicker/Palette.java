@@ -8,6 +8,7 @@ import mobi.espier.utils.colorpicker.ColorPicker.OnColorChangedListener;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
+import android.util.SparseBooleanArray;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,15 +48,23 @@ public class Palette extends GridView implements ColorView,
 		mInitChecked = a.getInt(R.styleable.Palette_initChecked, -1);
 
 		setOnItemClickListener();
-		//setChoiceMode(GridView.CHOICE_MODE_SINGLE);
+		setChoiceMode(CHOICE_MODE_SINGLE);
 	}
 
 	public void setAdapter(Integer[] palette) {
 		setAdapter(new PaletteAdapter(palette));
 		if (mInitChecked > -1 && mInitChecked < getAdapter().getCount()) {
-			//setItemChecked(mInitChecked, true);
+			setItemChecked(mInitChecked, true);
 			mColor = palette[mInitChecked];
+
 		}
+	}
+	
+	@Override
+	protected void layoutChildren(){
+		super.layoutChildren();
+		
+		updateOnScreenCheckedViews();
 	}
 
 	public void setOnItemClickListener() {
@@ -64,7 +73,7 @@ public class Palette extends GridView implements ColorView,
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				if (view instanceof Checkable) {
-					//setItemChecked(position, true);
+					setItemChecked(position, true);
 				}
 				mColor = (Integer) getAdapter().getItem(position);
 				if (mColorChangedListener != null) {
@@ -174,5 +183,58 @@ public class Palette extends GridView implements ColorView,
 			return convertView;
 		}
 
+	}
+
+	public static final int CHOICE_MODE_NONE = 0;
+	public static final int CHOICE_MODE_SINGLE = 1;
+	int mChoiceMode = CHOICE_MODE_NONE;
+	private SparseBooleanArray mCheckStates;
+
+	public void setChoiceMode(int choiceMode) {
+		mChoiceMode = choiceMode;
+		if (mChoiceMode != CHOICE_MODE_NONE) {
+			if (mCheckStates == null) {
+				mCheckStates = new SparseBooleanArray();
+			}
+		}
+	}
+
+	public void setItemChecked(int position, boolean value) {
+		if (mChoiceMode == CHOICE_MODE_NONE) {
+			return;
+		}
+
+		if (mChoiceMode == CHOICE_MODE_SINGLE) {
+			if (value || isItemChecked(position)) {
+				mCheckStates.clear();
+			}
+
+			if (value) {
+				mCheckStates.put(position, true);
+			} else if (mCheckStates.size() == 0 || !mCheckStates.valueAt(0)) {
+			}
+		}
+
+		requestLayout();
+	}
+
+	private void updateOnScreenCheckedViews() {
+		final int firstPos = getFirstVisiblePosition();
+		final int count = getChildCount();
+		for (int i = 0; i < count; i++) {
+			final View child = getChildAt(i);
+			final int position = firstPos + i;
+			if (child instanceof Checkable) {
+				((Checkable) child).setChecked(mCheckStates.get(position));
+			}
+		}
+	}
+
+	public boolean isItemChecked(int position) {
+		if (mChoiceMode != CHOICE_MODE_NONE && mCheckStates != null) {
+			return mCheckStates.get(position);
+		}
+
+		return false;
 	}
 }
