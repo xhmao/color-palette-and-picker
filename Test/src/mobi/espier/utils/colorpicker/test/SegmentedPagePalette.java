@@ -6,7 +6,7 @@ import mobi.espier.utils.colorpicker.Palette;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
-import cn.fmsoft.ioslikeui.widget.SegmentedPage;
+import cn.android.xh.segmentedctrl.SegmentedPage;
 
 public class SegmentedPagePalette extends SegmentedPage implements ColorView {
 	Palette mPalette;

@@ -7,7 +7,7 @@ import mobi.espier.utils.colorpicker.SVBar;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
-import cn.fmsoft.ioslikeui.widget.SegmentedPage;
+import cn.android.xh.segmentedctrl.SegmentedPage;
 
 public class SegmentedPageColorPicker extends SegmentedPage implements
 		ColorView {

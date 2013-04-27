@@ -8,11 +8,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import cn.fmsoft.ioslikeui.widget.SegmentedPage;
-import cn.fmsoft.ioslikeui.widget.SegmentedPage.OnSegmentedPageDataChangedListener;
-import cn.fmsoft.ioslikeui.widget.SegmentedPageGroup;
-import cn.fmsoft.ioslikeui.widget.SegmentedPageGroup.OnPageShownListener;
-import cn.fmsoft.ioslikeui.widget.SegmentedRadioGroup;
+import cn.android.xh.segmentedctrl.SegmentedPage;
+import cn.android.xh.segmentedctrl.SegmentedPage.OnSegmentedPageDataChangedListener;
+import cn.android.xh.segmentedctrl.SegmentedPageGroup;
+import cn.android.xh.segmentedctrl.SegmentedPageGroup.OnPageShownListener;
+import cn.android.xh.segmentedctrl.SegmentedRadioGroup;
 
 public class MainActivity extends Activity implements OnPageShownListener,
 		OnSegmentedPageDataChangedListener {

@@ -18,7 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center" >
-        <cn.fmsoft.ioslikeui.widget.SegmentedRadioGroup
+        <cn.android.xh.segmentedctrl.SegmentedRadioGroup
             android:id="@+id/radio_group"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -52,9 +52,9 @@
                 android:text="Color Picker"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textColor="@color/radio_colors" />
-        </cn.fmsoft.ioslikeui.widget.SegmentedRadioGroup>
+        </cn.android.xh.segmentedctrl.SegmentedRadioGroup>
     </LinearLayout>
-    <cn.fmsoft.ioslikeui.widget.SegmentedPageGroup
+    <cn.android.xh.segmentedctrl.SegmentedPageGroup
         android:id="@+id/page_group"
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
@@ -74,5 +74,5 @@
             android:id="@+id/color_picker_page"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-    </cn.fmsoft.ioslikeui.widget.SegmentedPageGroup>
+    </cn.android.xh.segmentedctrl.SegmentedPageGroup>
 </LinearLayout>
