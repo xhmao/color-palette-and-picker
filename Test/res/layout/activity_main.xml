@@ -58,29 +58,21 @@
         android:id="@+id/page_group"
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
-        <mobi.espier.utils.colorpicker.Palette
-            android:id="@+id/palette"
+        <mobi.espier.utils.colorpicker.test.SegmentedPagePalette
+            android:id="@+id/palette_page"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:horizontalSpacing="10sp"
-            android:numColumns="4"
-            android:padding="10sp"
-            android:stretchMode="columnWidth"
-            android:verticalSpacing="10sp"
-            cp:initChecked="1" />
-        <mobi.espier.utils.colorpicker.Palette
-            android:id="@+id/palette1"
+            android:padding="10sp" />
+        <mobi.espier.utils.colorpicker.test.SegmentedPagePalette
+            android:id="@+id/palette_page1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:horizontalSpacing="10sp"
-            android:numColumns="4"
-            android:padding="10sp"
-            android:stretchMode="columnWidth"
-            android:verticalSpacing="10sp"
-            cp:initChecked="0" />
-        <include layout="@layout/color_picker_page" >
-        </include>
+            android:padding="10sp" />
+        <mobi.espier.utils.colorpicker.test.SegmentedPageColorPicker
+            android:id="@+id/color_picker_page"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
     </cn.fmsoft.ioslikeui.widget.SegmentedPageGroup>
 </LinearLayout>

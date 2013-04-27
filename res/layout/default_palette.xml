@@ -1,0 +1,12 @@
+<mobi.espier.utils.colorpicker.Palette xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:cp="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/palette"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:horizontalSpacing="10sp"
+    android:numColumns="4"
+    android:padding="10sp"
+    android:stretchMode="columnWidth"
+    android:verticalSpacing="10sp"
+    cp:initChecked="1" />

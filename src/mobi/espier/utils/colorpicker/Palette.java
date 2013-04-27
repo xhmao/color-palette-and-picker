@@ -17,15 +17,12 @@ import android.widget.BaseAdapter;
 import android.widget.Checkable;
 import android.widget.GridView;
 import android.widget.TextView;
-import cn.fmsoft.ioslikeui.widget.SegmentedPageCallback;
-import cn.fmsoft.ioslikeui.widget.SegmentedPageCallback.SegmentedPageCallbackRegister;
 
-public class Palette extends GridView implements ColorView,
-		SegmentedPageCallbackRegister {
-	private int mColor;
+public class Palette extends GridView {
 	private int mInitChecked;
+	private int mColor;
+	private PaletteAdapter mAdapter;
 	private OnColorChangedListener mColorChangedListener;
-	private SegmentedPageCallback mSegmentedPageCallback;
 
 	public Palette(Context context) {
 		super(context);
@@ -34,7 +31,6 @@ public class Palette extends GridView implements ColorView,
 
 	public Palette(Context context, AttributeSet attr) {
 		this(context, attr, 0);
-
 	}
 
 	public Palette(Context context, AttributeSet attr, int defStyle) {
@@ -45,51 +41,44 @@ public class Palette extends GridView implements ColorView,
 	private void init(Context context, AttributeSet attrs, int defStyle) {
 		TypedArray a = context.obtainStyledAttributes(attrs,
 				R.styleable.Palette, defStyle, 0);
-		mInitChecked = a.getInt(R.styleable.Palette_initChecked, -1);
+		mInitChecked = a.getInt(R.styleable.Palette_initChecked, 0);
 
-		setOnItemClickListener();
-		setChoiceMode(CHOICE_MODE_SINGLE);
-	}
-
-	public void setAdapter(Integer[] palette) {
-		setAdapter(new PaletteAdapter(palette));
-		if (mInitChecked > -1 && mInitChecked < getAdapter().getCount()) {
-			setItemChecked(mInitChecked, true);
-			mColor = palette[mInitChecked];
-
-		}
-	}
-	
-	@Override
-	protected void layoutChildren(){
-		super.layoutChildren();
-		
-		updateOnScreenCheckedViews();
-	}
-
-	public void setOnItemClickListener() {
 		setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				if (view instanceof Checkable) {
-					setItemChecked(position, true);
-				}
-				mColor = (Integer) getAdapter().getItem(position);
-				if (mColorChangedListener != null) {
-					mColorChangedListener.onColorChanged(mColor);
-				}
-
-				if (mSegmentedPageCallback != null) {
-					mSegmentedPageCallback.event(Palette.this, mColor);
-				}
+				mAdapter.setColorByIndex(position);
 			}
 		});
+
+		setChoiceMode(CHOICE_MODE_SINGLE);
+	}
+
+	public void setAdapter(Integer[] palette) {
+		mAdapter = new PaletteAdapter(palette);
+		setAdapter(mAdapter);
+		if (mInitChecked > -1 && mInitChecked < getAdapter().getCount()) {
+			mAdapter.setColorByIndex(mInitChecked);
+		}
 	}
 
 	@Override
-	public int getColor() {
-		return mColor;
+	public PaletteAdapter getAdapter() {
+		return mAdapter;
+	}
+
+	private void setColor(int color) {
+		mColor = color;
+		if (mColorChangedListener != null) {
+			mColorChangedListener.onColorChanged(mColor);
+		}
+	}
+
+	@Override
+	protected void layoutChildren() {
+		super.layoutChildren();
+
+		updateOnScreenCheckedViews();
 	}
 
 	public void setOnColorChangedListener(OnColorChangedListener listener) {
@@ -100,19 +89,12 @@ public class Palette extends GridView implements ColorView,
 		return mColorChangedListener;
 	}
 
-	public void setSegmentedPageCallback(SegmentedPageCallback callback) {
-		mSegmentedPageCallback = callback;
-	}
-
-	public SegmentedPageCallback getSegmentedPageCallback() {
-		return mSegmentedPageCallback;
-	}
-
-	class PaletteAdapter extends BaseAdapter {
+	public class PaletteAdapter extends BaseAdapter {
 		private final static int PALETTE_LIMIT = 20;
 
 		private List<Integer> mData = new ArrayList<Integer>();
 		private int mInnerCount;
+		private int mColorIndex;
 
 		class Holder {
 			TextView item;
@@ -183,6 +165,19 @@ public class Palette extends GridView implements ColorView,
 			return convertView;
 		}
 
+		public void setColorByIndex(int i) {
+			if (i < 0 || i >= mData.size()) {
+				i = 0;
+			}
+
+			mColorIndex = i;
+			setColor(getColor());
+			setItemChecked(i, true);
+		}
+
+		public int getColor() {
+			return (Integer) getItem(mColorIndex);
+		}
 	}
 
 	public static final int CHOICE_MODE_NONE = 0;
@@ -236,5 +231,14 @@ public class Palette extends GridView implements ColorView,
 		}
 
 		return false;
+	}
+
+	public int getCheckedItemPosition() {
+		if (mChoiceMode == CHOICE_MODE_SINGLE && mCheckStates != null
+				&& mCheckStates.size() == 1) {
+			return mCheckStates.keyAt(0);
+		}
+
+		return INVALID_POSITION;
 	}
 }

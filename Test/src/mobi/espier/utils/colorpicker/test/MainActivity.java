@@ -1,32 +1,30 @@
 package mobi.espier.utils.colorpicker.test;
 
 import mobi.espier.utils.colorpicker.ColorPicker;
-import mobi.espier.utils.colorpicker.ColorPickerPage;
 import mobi.espier.utils.colorpicker.ColorView;
-import mobi.espier.utils.colorpicker.Palette;
-import mobi.espier.utils.colorpicker.SVBar;
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import cn.fmsoft.ioslikeui.widget.SegmentedPage;
+import cn.fmsoft.ioslikeui.widget.SegmentedPage.OnSegmentedPageDataChangedListener;
 import cn.fmsoft.ioslikeui.widget.SegmentedPageGroup;
-import cn.fmsoft.ioslikeui.widget.SegmentedPageGroup.OnPageCallback;
-import cn.fmsoft.ioslikeui.widget.SegmentedPageGroup.OnPageSelectedListener;
+import cn.fmsoft.ioslikeui.widget.SegmentedPageGroup.OnPageShownListener;
 import cn.fmsoft.ioslikeui.widget.SegmentedRadioGroup;
 
-public class MainActivity extends Activity implements OnPageSelectedListener,
-		OnPageCallback {
+public class MainActivity extends Activity implements OnPageShownListener,
+		OnSegmentedPageDataChangedListener {
 	TextView mTest;
 
 	SegmentedRadioGroup mGroup;
 	SegmentedPageGroup mPageGroup;
 
-	ColorPickerPage mCPPage;
+	SegmentedPageColorPicker mCPPage;
 	ColorPicker picker;
 	LinearLayout mPalettePage;
-	Palette mPalette;
+	SegmentedPagePalette mPalette;
 
 	Integer[] colors = { Color.BLACK, Color.GREEN, Color.RED, Color.BLUE,
 			Color.CYAN, Color.DKGRAY, Color.LTGRAY, Color.MAGENTA, Color.YELLOW };
@@ -42,47 +40,42 @@ public class MainActivity extends Activity implements OnPageSelectedListener,
 		mGroup.check(R.id.color_picker_button);
 
 		mPageGroup = (SegmentedPageGroup) findViewById(R.id.page_group);
-		mPageGroup.setRadioGroup(mGroup, new int[] { R.id.palette_button,
-				R.id.palette_button1, R.id.color_picker_button }, new int[] {
-				R.id.palette, R.id.palette1, R.id.color_picker_page });
-		mPageGroup.setOnPageSelectedListener(this);
-		mPageGroup.setOnPageCallback(this);
+		mPageGroup
+				.setRadioGroup(mGroup, new int[] { R.id.palette_button,
+						R.id.palette_button1, R.id.color_picker_button },
+						new int[] { R.id.palette_page, R.id.palette_page1,
+								R.id.color_picker_page });
+		mPageGroup.setOnPageShownListener(this);
+		mPageGroup.setOnSegmentedPageDataChangedListener(this);
+
+		mPalette = (SegmentedPagePalette) findViewById(R.id.palette_page);
+		mPalette.setAdapter(colors);
+
+		mPalette = (SegmentedPagePalette) findViewById(R.id.palette_page1);
+		mPalette.setAdapter(colors);
+		mPalette.mPalette.getAdapter().setColorByIndex(3);
+
+		View page = mPageGroup.getSelectedPage();
+		if (page instanceof ColorView) {
+			int color = ((ColorView) page).getColor();
+			mTest.setText(Integer.toHexString(color));
+			mTest.setTextColor(color);
+		}
 		
-		mPalette = (Palette) findViewById(R.id.palette);
-		mPalette.setAdapter(colors);
-
-		mPalette = (Palette) findViewById(R.id.palette1);
-		mPalette.setAdapter(colors);
-
-		mCPPage = (ColorPickerPage) findViewById(R.id.color_picker_page);
-		picker = (ColorPicker) findViewById(R.id.picker);
-		SVBar svBar = (SVBar) findViewById(R.id.svbar);
-		picker.addSVBar(svBar);
-
-		/*
-		 * OpacityBar opacityBar = (OpacityBar) findViewById(R.id.opacitybar);
-		 * SaturationBar saturationBar = (SaturationBar)
-		 * findViewById(R.id.saturationbar); ValueBar valueBar = (ValueBar)
-		 * findViewById(R.id.valuebar);
-		 */
-
-		/*
-		 * picker.addOpacityBar(opacityBar);
-		 * picker.addSaturationBar(saturationBar); picker.addValueBar(valueBar);
-		 */
+		mPalette.mPalette.getAdapter().setColorByIndex(3);
 	}
 
 	@Override
-	public void pageSelect(SegmentedPageGroup pageGroup, View selectedPage) {
-		if (selectedPage instanceof ColorView) {
-			int color = ((ColorView) selectedPage).getColor();
+	public void pageShown(View page) {
+		if (page instanceof ColorView) {
+			int color = ((ColorView) page).getColor();
 			mTest.setText(Integer.toHexString(color));
 			mTest.setTextColor(color);
 		}
 	}
 
 	@Override
-	public void pageCall(View v, Object o) {
+	public void pageChangedNotify(SegmentedPage v, Object o, int type) {
 		if (v instanceof ColorView) {
 			int color = ((ColorView) v).getColor();
 			mTest.setText(Integer.toHexString(color));
